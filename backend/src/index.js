@@ -1,9 +1,17 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config(); // this will load the env variables from the .env file and make it available in the process.env object.
 import userRouter from './user/user.routes.js';
 
 
 const app = express();
+app.listen(3001, () => console.log("Server is running eeee on port 3001 ")); 
 
+//database connection 
+import mongoose from 'mongoose';
+mongoose.connect(process.env.DB_URL)
+.then(() => console.log("Database connected successfully"))
+.catch(() => console.log("Database connection failed"));
 
 app.get("/", (req, res) => {
   res.json("Setup Successful :) ");
@@ -25,4 +33,3 @@ app.use(express.urlencoded({extended:false}));
 app.use("/api/user",userRouter);
 //types of middleware 1. route evel 2. app level middleware 3.third party middle ware
 
-app.listen(3001, () => console.log("Server is running eeee on port 3001 ")); 

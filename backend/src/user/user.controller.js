@@ -1,9 +1,12 @@
+import UserModel from "./user.model.js";
 export const createUser = async ( req, res) => {
     try{
          console.log("Create user API hit");
          const data = req.body; 
+         const user = new UserModel(data);
+         await user.save();
          console.log(data); 
-         res.json({message: "Request received"});
+         res.json(user);
     }catch(error){
         res.status(500).json({message : err.message}); 
     }
